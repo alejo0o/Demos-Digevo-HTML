@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * https://www.apache.org/licenses/LICENSE-2.0
+ * /LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,36 +18,48 @@
 import * as blazeface from '@tensorflow-models/blazeface';
 import * as tf from '@tensorflow/tfjs-core';
 import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
-import regeneratorRuntime from "regenerator-runtime";
+
+import regeneratorRuntime from 'regenerator-runtime';
+
 // tfjsWasm.setWasmPath('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@latest/dist/tfjs-backend-wasm.wasm');
 
 const stats = new Stats();
 stats.showPanel(0);
 document.body.prepend(stats.domElement);
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.marginTop = '0';
+stats.domElement.style.marginLeft = '0';
 
-let model, ctx, videoWidth, videoHeight, video, canvas;
+let model, ctx, videoWidth, videoHeight, camera, canvas;
 
 const state = {
-  backend: 'wasm'
+  backend: 'wasm',
 };
 
 const gui = new dat.GUI();
-gui.add(state, 'backend', ['wasm', 'webgl', 'cpu']).onChange(async backend => {
-  await tf.setBackend(backend);
-});
+gui
+  .add(state, 'backend', ['wasm', 'webgl', 'cpu'])
+  .onChange(async (backend) => {
+    await tf.setBackend(backend);
+  });
+document.body.prepend(gui.domElement);
+gui.domElement.style.position = 'absolute';
+gui.domElement.style.display = 'block';
+gui.domElement.style.marginTop = '0';
+gui.domElement.style.marginLeft = '78%';
 
 async function setupCamera() {
-  video = document.getElementById('video');
+  camera = document.getElementById('video');
 
   const stream = await navigator.mediaDevices.getUserMedia({
-    'audio': false,
-    'video': { facingMode: 'user' },
+    audio: false,
+    video: { facingMode: 'user' },
   });
-  video.srcObject = stream;
+  camera.srcObject = stream;
 
   return new Promise((resolve) => {
-    video.onloadedmetadata = () => {
-      resolve(video);
+    camera.onloadedmetadata = () => {
+      resolve(camera);
     };
   });
 }
@@ -59,7 +71,11 @@ const renderPrediction = async () => {
   const flipHorizontal = true;
   const annotateBoxes = true;
   const predictions = await model.estimateFaces(
-    video, returnTensors, flipHorizontal, annotateBoxes);
+    camera,
+    returnTensors,
+    flipHorizontal,
+    annotateBoxes
+  );
 
   if (predictions.length > 0) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -76,13 +92,13 @@ const renderPrediction = async () => {
       const start = predictions[i].topLeft;
       const end = predictions[i].bottomRight;
       const size = [end[0] - start[0], end[1] - start[1]];
-      ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+      ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
       ctx.fillRect(start[0], start[1], size[0], size[1]);
 
       if (annotateBoxes) {
         const landmarks = predictions[i].landmarks;
 
-        ctx.fillStyle = "blue";
+        ctx.fillStyle = 'blue';
         for (let j = 0; j < landmarks.length; j++) {
           const x = landmarks[j][0];
           const y = landmarks[j][1];
@@ -100,18 +116,18 @@ const renderPrediction = async () => {
 const setupPage = async () => {
   await tf.setBackend(state.backend);
   await setupCamera();
-  video.play();
+  camera.play();
 
-  videoWidth = video.videoWidth;
-  videoHeight = video.videoHeight;
-  video.width = videoWidth;
-  video.height = videoHeight;
+  videoWidth = camera.videoWidth;
+  videoHeight = camera.videoHeight;
+  camera.width = videoWidth;
+  camera.height = videoHeight;
 
   canvas = document.getElementById('output');
   canvas.width = videoWidth;
   canvas.height = videoHeight;
   ctx = canvas.getContext('2d');
-  ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+  ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 
   model = await blazeface.load();
 
