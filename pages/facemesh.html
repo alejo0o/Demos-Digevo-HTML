@@ -12,8 +12,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================-->
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
   <!-- Load three.js -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
   <!-- Load scatter-gl.js -->
@@ -41,6 +46,41 @@ limitations under the License.
 </head>
 
 <body>
+  <!-- NavBar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
+    <a class="navbar-brand" href="#" id="logo">DIGEVO </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto" id="items">
+        <li class="nav-item active">
+          <a class="nav-link" href="/" id="option">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" href="" aria-expanded="false">
+            Demos
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="./blazeface.html">Blazeface Demo - Vision</a>
+            <a class="dropdown-item" href="./body-pix.html">Body-pix Demo - Vision</a>
+            <a class="dropdown-item" href="./facemesh.html">Facemesh Demo - Vision</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="./camera.html">Pose Estimation - Camera feed demo</a>
+            <a class="dropdown-item" href="./coco.html">Pose Estimation - Image demo</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="option" rel='noreferrer' target='_blank'
+            href='https://digevo.com/contacto/'>Contacto</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- Body -->
   <div id="main">
     <div class="container">
       <div class="canvas-wrapper">
@@ -57,7 +97,32 @@ limitations under the License.
       <div id="scatter-gl-container"></div>
     </div>
   </div>
+  <!-- FOOTER -->
+  <footer>
+    <div id="firstContainer">
+      <div id="logoFooter">DIGEVO</div>
+      <br />
+      <p>Oficina central - Santiago de Chile</p>
+      <a href="https://digevo.com/contacto/">contacto@digevo.com</a>
+      <p id="mt-3">Empresa 3G Motion SpA</p>
+    </div>
+    <div id="line"></div>
+    <div id="secondContainer">
+      <p>© Copyright Digevo 2020</p>
+      <div id="iconContainer">
+        <a rel="noreferrer" target="_blank" href="https://www.linkedin.com/company/digevo/">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a rel="noreferrer" target="_blank" href="https://www.facebook.com/DigevoGroup/">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <!-- CNDS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
+  <script src="../demos/facemesh.js"></script>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
-<script src="../demos/facemesh.js"></script>
+
+</html>
