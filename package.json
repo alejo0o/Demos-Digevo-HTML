@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "Página web demostrativa para los demos de Digevo",
   "main": "index.js",
+  "engines": {
+    "node": ">=8.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
-    "dev": "cross-env NODE_ENV=development parcel index.html --no-hmr --open"
+    "build": "cross-env NODE_ENV=production parcel build ./pages/index.html --public-url ./",
+    "dev": "cross-env NODE_ENV=development parcel ./pages/index.html --no-hmr --open "
+  },
+  "browser": {
+    "crypto": false
   },
   "repository": {
     "type": "git",
@@ -24,23 +30,43 @@
     "@tensorflow-models/facemesh": "0.0.3",
     "@tensorflow-models/posenet": "2.2.1",
     "@tensorflow-models/toxicity": "1.2.2",
-    "@tensorflow/tfjs": "2.1.0",
-    "@tensorflow/tfjs-backend-wasm": "2.1.0",
+    "@tensorflow/tfjs": "1.7.4",
+    "@tensorflow/tfjs-backend-wasm": "1.7.4",
     "@tensorflow/tfjs-converter": "2.1.0",
-    "@tensorflow/tfjs-core": "2.1.0",
+    "@tensorflow/tfjs-core": "1.7.4",
     "stats.js": "0.17.0"
   },
   "devDependencies": {
-    "babel-core": "6.26.3",
-    "babel-plugin-transform-runtime": "6.23.0",
-    "babel-polyfill": "6.26.0",
-    "babel-preset-env": "1.7.0",
-    "babel-preset-es2017": "6.24.1",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "~6.23.0",
+    "babel-polyfill": "~6.26.0",
+    "babel-preset-env": "~1.6.1",
+    "babel-preset-es2017": "^6.24.1",
     "bootstrap": "4.5.2",
-    "clang-format": "1.4.0",
-    "cross-env": "7.0.2",
-    "dat.gui": "0.7.7",
-    "parcel-bundler": "1.12.4",
-    "yalc": "1.0.0-pre.41"
-  }
+    "clang-format": "~1.2.2",
+    "cross-env": "^5.2.0",
+    "dat.gui": "^0.7.2",
+    "eslint": "^4.19.1",
+    "eslint-config-google": "^0.9.1",
+    "parcel-bundler": "^1.12.4",
+    "yalc": "~1.0.0-pre.27"
+  },
+  "eslintConfig": {
+    "extends": "google",
+    "rules": {
+      "require-jsdoc": 0,
+      "valid-jsdoc": 0
+    },
+    "env": {
+      "es6": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    }
+  },
+  "eslintIgnore": [
+    "dist/",
+    "demos/"
+  ]
 }

@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template: minmax(160px, 0.8fr) minmax(160px, 1fr) / repeat(
+  grid-template: minmax(160px, 0.65fr) minmax(160px, 0.96fr) / repeat(
       3,
       minmax(160px, 20em)
     );

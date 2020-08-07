@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * /LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,19 +18,14 @@
 import * as blazeface from '@tensorflow-models/blazeface';
 import * as tf from '@tensorflow/tfjs-core';
 import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
-
 import regeneratorRuntime from 'regenerator-runtime';
-
 // tfjsWasm.setWasmPath('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@latest/dist/tfjs-backend-wasm.wasm');
 
 const stats = new Stats();
 stats.showPanel(0);
 document.body.prepend(stats.domElement);
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.marginTop = '0';
-stats.domElement.style.marginLeft = '0';
 
-let model, ctx, videoWidth, videoHeight, camera, canvas;
+let model, ctx, videoWidth, videoHeight, video, canvas;
 
 const state = {
   backend: 'wasm',
@@ -42,24 +37,19 @@ gui
   .onChange(async (backend) => {
     await tf.setBackend(backend);
   });
-document.body.prepend(gui.domElement);
-gui.domElement.style.position = 'absolute';
-gui.domElement.style.display = 'block';
-gui.domElement.style.marginTop = '0';
-gui.domElement.style.marginLeft = '78%';
 
 async function setupCamera() {
-  camera = document.getElementById('video');
+  video = document.getElementById('video');
 
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: false,
     video: { facingMode: 'user' },
   });
-  camera.srcObject = stream;
+  video.srcObject = stream;
 
   return new Promise((resolve) => {
-    camera.onloadedmetadata = () => {
-      resolve(camera);
+    video.onloadedmetadata = () => {
+      resolve(video);
     };
   });
 }
@@ -71,7 +61,7 @@ const renderPrediction = async () => {
   const flipHorizontal = true;
   const annotateBoxes = true;
   const predictions = await model.estimateFaces(
-    camera,
+    video,
     returnTensors,
     flipHorizontal,
     annotateBoxes
@@ -116,12 +106,12 @@ const renderPrediction = async () => {
 const setupPage = async () => {
   await tf.setBackend(state.backend);
   await setupCamera();
-  camera.play();
+  video.play();
 
-  videoWidth = camera.videoWidth;
-  videoHeight = camera.videoHeight;
-  camera.width = videoWidth;
-  camera.height = videoHeight;
+  videoWidth = video.videoWidth;
+  videoHeight = video.videoHeight;
+  video.width = videoWidth;
+  video.height = videoHeight;
 
   canvas = document.getElementById('output');
   canvas.width = videoWidth;
