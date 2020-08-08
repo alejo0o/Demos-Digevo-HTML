@@ -12,61 +12,56 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================-->
-
-<style>
-  body {
-    margin: 25px;
-  }
-
-  #main {
-    position: relative;
-    margin: 50px 0;
-  }
-
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  #description {
-    margin-top: 20px;
-    width: 600px;
-  }
-
-  #description-title {
-    font-weight: bold;
-    font-size: 18px;
-  }
-</style>
-
-<body>
-  <!-- NavBar -->
-  <div id="main">
-    <video id="video" playsinline style="
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
-      width: auto;
-      height: auto;
-      ">
-    </video>
-    <canvas id="output"></canvas>
-    <div id="description">
-      <div id="description-title">Blazeface demo</div>
-      <p>This demo shows the blazeface model detecting faces in a live camera feed. The demo renders a semi-transparent
-        red
-        box over faces, and blue dots over facial landmarks (eyes, ears, nose, and mouth).</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="../styles//pages/blazeface.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <link href="../styles/descripcion.css" type="text/css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="principal">
+      <div id="global">
+        <div id="title">Blazeface demo</div>
+        <div id="icon">
+          <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
+        </div>
+      </div>
+      <div id="description">
+        <p>
+          This demo shows the blazeface model detecting faces in a live camera
+          feed. The demo renders a semi-transparent red box over faces, and blue
+          dots over facial landmarks (eyes, ears, nose, and mouth).
+        </p>
+      </div>
     </div>
-    <video id="video" playsinline style="
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
-      visibility: hidden;
-      width: auto;
-      height: auto;
-      ">
-    </video>
-  </div>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
-<script src="../demos/blazeface.js"></script>
+    <div id="main">
+      <video
+        id="video"
+        playsinline
+        style="
+          -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+          /* width: auto;
+          height: auto; */
+        "
+      ></video>
+      <canvas id="output"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
+    <script src="../demos/blazeface.js"></script>
+  </body>
+</html>
