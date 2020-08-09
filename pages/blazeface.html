@@ -22,37 +22,14 @@ limitations under the License.
   <!-- Styles -->
   <link rel="stylesheet" type="text/css" href="../styles/navbar.css" />
   <link rel="stylesheet" type="text/css" href="../styles/footer.css" />
+  <link rel="stylesheet" type="text/css" href="../styles/descripcion.css" />
+  <link rel="stylesheet" type="text/css" href="../styles/pages/blazeface.css" />
   <!-- CDN'S -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-  <style>
-    body {
-      margin: 25px;
-    }
 
-    #main {
-      position: relative;
-      margin: 50px 0;
-    }
-
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    #description {
-      margin-top: 20px;
-      width: 600px;
-    }
-
-    #description-title {
-      font-weight: bold;
-      font-size: 18px;
-    }
-  </style>
 </head>
 
 <body>
@@ -91,6 +68,21 @@ limitations under the License.
     </div>
   </nav>
   <!-- Estructura -->
+  <div id="principal">
+      <div id="global">
+        <div id="title">Blazeface demo</div>
+        <div id="icon">
+          <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
+        </div>
+      </div>
+      <div id="description">
+        <p>
+          This demo shows the blazeface model detecting faces in a live camera
+          feed. The demo renders a semi-transparent red box over faces, and blue
+          dots over facial landmarks (eyes, ears, nose, and mouth).
+        </p>
+      </div>
+    </div>
   <div id="main">
     <video id="video" playsinline style="
       -webkit-transform: scaleX(-1);
@@ -138,8 +130,8 @@ limitations under the License.
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
   <script src="../demos/blazeface.js"></script>
 </body>
 
