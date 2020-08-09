@@ -16,9 +16,7 @@
  */
 import * as posenet from '@tensorflow-models/posenet';
 import * as tf from '@tensorflow/tfjs';
-import dat from 'dat.gui';
 
-import {isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
 // clang-format off
 import {
   drawBoundingBox,
@@ -26,9 +24,17 @@ import {
   drawSkeleton,
   renderImageToCanvas,
 } from './demo_util';
+import {
+  isMobile,
+  toggleLoadingUI,
+  tryResNetButtonName,
+  tryResNetButtonText,
+  updateTryResNetButtonDatGuiCss,
+} from './demo_util';
+
+import dat from 'dat.gui';
 
 // clang-format on
-
 
 const images = [
   'frisbee.jpg',
@@ -82,7 +88,7 @@ function drawResults(canvas, poses, minPartConfidence, minPoseConfidence) {
 }
 
 const imageBucket =
-    'https://storage.googleapis.com/tfjs-models/assets/posenet/';
+  'https://storage.googleapis.com/tfjs-models/assets/posenet/';
 
 async function loadImage(imagePath) {
   const image = new Image();
@@ -110,8 +116,11 @@ let predictedPoses = null;
 function drawMultiplePosesResults() {
   const canvas = multiPersonCanvas();
   drawResults(
-      canvas, predictedPoses, guiState.multiPoseDetection.minPartConfidence,
-      guiState.multiPoseDetection.minPoseConfidence);
+    canvas,
+    predictedPoses,
+    guiState.multiPoseDetection.minPartConfidence,
+    guiState.multiPoseDetection.minPoseConfidence
+  );
 }
 
 function setStatusText(text) {
@@ -151,7 +160,7 @@ async function testImageAndEstimatePoses(net) {
     decodingMethod: 'multi-person',
     maxDetections: guiState.multiPoseDetection.maxDetections,
     scoreThreshold: guiState.multiPoseDetection.minPartConfidence,
-    nmsRadius: guiState.multiPoseDetection.nmsRadius
+    nmsRadius: guiState.multiPoseDetection.nmsRadius,
   });
   predictedPoses = poses;
 
@@ -185,7 +194,7 @@ async function reloadNetTestImageAndEstimatePoses(net) {
 
 const defaultQuantBytes = 2;
 
-const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75;
+const defaultMobileNetMultiplier = isMobile() ? 0.5 : 0.75;
 const defaultMobileNetStride = 16;
 const defaultMobileNetInputResolution = 513;
 
@@ -217,10 +226,14 @@ let guiState = {
 function setupGui(net) {
   guiState.net = net;
   const gui = new dat.GUI();
+  document.body.prepend(gui.domElement);
+  gui.domElement.style.position = 'absolute';
+  gui.domElement.style.marginTop = '5.2%';
+  gui.domElement.style.marginLeft = '78%';
 
   let architectureController = null;
-  guiState[tryResNetButtonName] = function() {
-    architectureController.setValue('ResNet50')
+  guiState[tryResNetButtonName] = function () {
+    architectureController.setValue('ResNet50');
   };
   gui.add(guiState, tryResNetButtonName).name(tryResNetButtonText);
   updateTryResNetButtonDatGuiCss();
@@ -235,9 +248,12 @@ function setupGui(net) {
     if (inputResolutionController) {
       inputResolutionController.remove();
     }
-    inputResolutionController =
-        model.add(guiState.model, 'inputResolution', inputResolutionArray);
-    inputResolutionController.onChange(async function(inputResolution) {
+    inputResolutionController = model.add(
+      guiState.model,
+      'inputResolution',
+      inputResolutionArray
+    );
+    inputResolutionController.onChange(async function (inputResolution) {
       guiState.model.inputResolution = +inputResolution;
       reloadNetTestImageAndEstimatePoses(guiState.net);
     });
@@ -251,8 +267,11 @@ function setupGui(net) {
     if (outputStrideController) {
       outputStrideController.remove();
     }
-    outputStrideController =
-        model.add(guiState.model, 'outputStride', outputStrideArray);
+    outputStrideController = model.add(
+      guiState.model,
+      'outputStride',
+      outputStrideArray
+    );
     outputStrideController.onChange((outputStride) => {
       guiState.model.outputStride = +outputStride;
       reloadNetTestImageAndEstimatePoses(guiState.net);
@@ -267,8 +286,11 @@ function setupGui(net) {
     if (multiplierController) {
       multiplierController.remove();
     }
-    multiplierController =
-        model.add(guiState.model, 'multiplier', multiplierArray);
+    multiplierController = model.add(
+      guiState.model,
+      'multiplier',
+      multiplierArray
+    );
     multiplierController.onChange((multiplier) => {
       guiState.model.multiplier = +multiplier;
       reloadNetTestImageAndEstimatePoses(guiState.net);
@@ -284,8 +306,11 @@ function setupGui(net) {
     if (quantBytesController) {
       quantBytesController.remove();
     }
-    quantBytesController =
-        model.add(guiState.model, 'quantBytes', quantBytesArray);
+    quantBytesController = model.add(
+      guiState.model,
+      'quantBytes',
+      quantBytesArray
+    );
     quantBytesController.onChange((quantBytes) => {
       guiState.model.quantBytes = +quantBytes;
       reloadNetTestImageAndEstimatePoses(guiState.net);
@@ -301,15 +326,17 @@ function setupGui(net) {
       updateGuiOutputStride([8, 16]);
       updateGuiMultiplier([0.5, 0.75, 1.0]);
     }
-    updateGuiQuantBytes([1, 2, 4])
+    updateGuiQuantBytes([1, 2, 4]);
   }
 
   // Architecture: there are a few PoseNet models varying in size and
   // accuracy. 1.01 is the largest, but will be the slowest. 0.50 is the
   // fastest, but least accurate.
-  architectureController =
-      model.add(guiState.model, 'architecture', ['MobileNetV1', 'ResNet50']);
-  architectureController.onChange(async function(architecture) {
+  architectureController = model.add(guiState.model, 'architecture', [
+    'MobileNetV1',
+    'ResNet50',
+  ]);
+  architectureController.onChange(async function (architecture) {
     if (architecture.includes('ResNet50')) {
       guiState.model.inputResolution = defaultResNetInputResolution;
       guiState.model.outputStride = defaultResNetStride;
@@ -321,14 +348,15 @@ function setupGui(net) {
     }
     guiState.model.quantBytes = defaultQuantBytes;
     guiState.model.architecture = architecture;
-    updateGui()
+    updateGui();
     reloadNetTestImageAndEstimatePoses(guiState.net);
   });
 
   updateGui();
 
-  gui.add(guiState, 'image', images)
-      .onChange(() => testImageAndEstimatePoses(guiState.net));
+  gui
+    .add(guiState, 'image', images)
+    .onChange(() => testImageAndEstimatePoses(guiState.net));
   // Pose confidence: the overall confidence in the estimation of a person's
   // pose (i.e. a person detected in a frame)
   // Min part confidence: the confidence that a particular estimated keypoint
@@ -336,21 +364,23 @@ function setupGui(net) {
   const multiPoseDetection = gui.addFolder('Multi Pose Estimation');
   multiPoseDetection.open();
   multiPoseDetection
-      .add(guiState.multiPoseDetection, 'minPartConfidence', 0.0, 1.0)
-      .onChange(drawMultiplePosesResults);
+    .add(guiState.multiPoseDetection, 'minPartConfidence', 0.0, 1.0)
+    .onChange(drawMultiplePosesResults);
   multiPoseDetection
-      .add(guiState.multiPoseDetection, 'minPoseConfidence', 0.0, 1.0)
-      .onChange(drawMultiplePosesResults);
+    .add(guiState.multiPoseDetection, 'minPoseConfidence', 0.0, 1.0)
+    .onChange(drawMultiplePosesResults);
 
   // nms Radius: controls the minimum distance between poses that are returned
   // defaults to 20, which is probably fine for most use cases
-  multiPoseDetection.add(guiState.multiPoseDetection, 'nmsRadius', 0.0, 40.0)
-      .onChange(() => testImageAndEstimatePoses(guiState.net));
-  multiPoseDetection.add(guiState.multiPoseDetection, 'maxDetections')
-      .min(1)
-      .max(20)
-      .step(1)
-      .onChange(() => testImageAndEstimatePoses(guiState.net));
+  multiPoseDetection
+    .add(guiState.multiPoseDetection, 'nmsRadius', 0.0, 40.0)
+    .onChange(() => testImageAndEstimatePoses(guiState.net));
+  multiPoseDetection
+    .add(guiState.multiPoseDetection, 'maxDetections')
+    .min(1)
+    .max(20)
+    .step(1)
+    .onChange(() => testImageAndEstimatePoses(guiState.net));
   gui.add(guiState, 'showKeypoints').onChange(drawMultiplePosesResults);
   gui.add(guiState, 'showSkeleton').onChange(drawMultiplePosesResults);
   gui.add(guiState, 'showBoundingBox').onChange(drawMultiplePosesResults);
@@ -367,7 +397,7 @@ export async function bindPage() {
     outputStride: guiState.model.outputStride,
     inputResolution: guiState.model.inputResolution,
     multiplier: guiState.model.multiplier,
-    quantBytes: guiState.model.quantBytes
+    quantBytes: guiState.model.quantBytes,
   });
   toggleLoadingUI(false);
   setupGui(net);

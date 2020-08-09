@@ -16,14 +16,14 @@
  */
 
 import * as facemesh from '@tensorflow-models/facemesh';
-import Stats from 'stats.js';
 import * as tf from '@tensorflow/tfjs-core';
 import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
+
+import Stats from 'stats.js';
+import { TRIANGULATION } from './triangulation';
 // TODO(annxingyuan): read version from tfjsWasm directly once
 // https://github.com/tensorflow/tfjs/pull/2819 is merged.
 import { version } from '@tensorflow/tfjs-backend-wasm/dist/version';
-
-import { TRIANGULATION } from './triangulation';
 
 tfjsWasm.setWasmPath(
   `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${version}/dist/tfjs-backend-wasm.wasm`
@@ -95,6 +95,10 @@ function setupDatGui() {
         : 'none';
     });
   }
+  document.body.prepend(gui.domElement);
+  gui.domElement.style.position = 'absolute';
+  gui.domElement.style.marginTop = '5.2%';
+  gui.domElement.style.marginLeft = '78%';
 }
 
 async function setupCamera() {

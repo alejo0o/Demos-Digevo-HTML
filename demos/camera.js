@@ -15,8 +15,6 @@
  * =============================================================================
  */
 import * as posenet from '@tensorflow-models/posenet';
-import dat from 'dat.gui';
-import Stats from 'stats.js';
 
 import {
   drawBoundingBox,
@@ -28,6 +26,9 @@ import {
   tryResNetButtonText,
   updateTryResNetButtonDatGuiCss,
 } from './demo_util';
+
+import Stats from 'stats.js';
+import dat from 'dat.gui';
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -308,7 +309,10 @@ function setupGui(cameras, net) {
     updateGui();
     guiState.changeToArchitecture = architecture;
   });
-
+  document.body.prepend(gui.domElement);
+  gui.domElement.style.position = 'absolute';
+  gui.domElement.style.marginTop = '5.2%';
+  gui.domElement.style.marginLeft = '78%';
   algorithmController.onChange(function (value) {
     switch (guiState.algorithm) {
       case 'single-pose':
@@ -328,7 +332,10 @@ function setupGui(cameras, net) {
  */
 function setupFPS() {
   stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-  document.getElementById('main').appendChild(stats.dom);
+  document.body.prepend(stats.domElement);
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.marginTop = '5.2%';
+  stats.domElement.style.marginLeft = '0';
 }
 
 /**

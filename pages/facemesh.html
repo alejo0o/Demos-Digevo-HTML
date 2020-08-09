@@ -22,6 +22,8 @@ limitations under the License.
   <!-- CSS -->
   <link href="../styles/navbar.css" type="text/css" rel="stylesheet" />
   <link href="../styles/footer.css" type="text/css" rel="stylesheet" />
+  <link href="../styles/pages/facemesh.css" type="text/css" rel="stylesheet" />
+  <linkhref="../styles/descripcion.css" type="text/css"  rel="stylesheet" />
   <!-- CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
@@ -31,32 +33,13 @@ limitations under the License.
   <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
   <!-- Load scatter-gl.js -->
   <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
-  <style>
-    .canvas-wrapper,
-    #scatter-gl-container {
-      display: inline-block;
-      vertical-align: top;
-    }
-
-    #scatter-gl-container {
-      border: solid 1px black;
-      position: relative;
-    }
-
-    /* center the canvas within its wrapper */
-    #scatter-gl-container canvas {
-      transform: translate3d(-50%, -50%, 0);
-      left: 50%;
-      top: 50%;
-      position: absolute;
-    }
-  </style>
+  
 </head>
 
 <body>
   <!-- NavBar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
-    <a class="navbar-brand" href="#" id="logo">DIGEVO </a>
+    <a class="navbar-brand" href="/" id="logo">DIGEVO </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -89,10 +72,26 @@ limitations under the License.
     </div>
   </nav>
   <!-- Body -->
+  <div id="principal">
+      <div id="global">
+        <div id="title">Facemesh demo</div>
+        <div id="icon">
+          <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
+        </div>
+      </div>
+      <div id="description">
+        <p>
+          This demo 
+        </p>
+      </div>
+    </div>
   <div id="main">
     <div class="container">
       <div class="canvas-wrapper">
-        <canvas id="output"></canvas>
+        <canvas id="output" playsinline style="
+          position: absolute;
+
+          "></canvas>
         <video id="video" playsinline style="
           -webkit-transform: scaleX(-1);
           transform: scaleX(-1);
@@ -128,6 +127,12 @@ limitations under the License.
     </div>
   </footer>
   <!-- CNDS -->
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
   <script src="../demos/facemesh.js"></script>

@@ -27,7 +27,7 @@ const stats = new Stats();
 stats.showPanel(0);
 document.body.prepend(stats.domElement);
 stats.domElement.style.position = 'absolute';
-stats.domElement.style.marginTop = '0';
+stats.domElement.style.marginTop = '5.2%';
 stats.domElement.style.marginLeft = '0';
 
 let model, ctx, videoWidth, videoHeight, camera, canvas;
@@ -44,8 +44,8 @@ gui
   });
 document.body.prepend(gui.domElement);
 gui.domElement.style.position = 'absolute';
-gui.domElement.style.display = 'block';
-gui.domElement.style.marginTop = '0';
+// gui.domElement.style.display = 'block';
+gui.domElement.style.marginTop = '5.2%';
 gui.domElement.style.marginLeft = '78%';
 
 async function setupCamera() {
