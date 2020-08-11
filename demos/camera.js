@@ -304,15 +304,14 @@ function setupGui(cameras, net) {
   output.add(guiState.output, 'showBoundingBox');
   output.open();
 
+  document.getElementById('main').appendChild(gui.domElement);
+
   architectureController.onChange(function (architecture) {
     // if architecture is ResNet50, then show ResNet50 options
     updateGui();
     guiState.changeToArchitecture = architecture;
   });
-  document.body.prepend(gui.domElement);
-  gui.domElement.style.position = 'absolute';
-  gui.domElement.style.marginTop = '5.2%';
-  gui.domElement.style.marginLeft = '78%';
+
   algorithmController.onChange(function (value) {
     switch (guiState.algorithm) {
       case 'single-pose':
@@ -332,10 +331,7 @@ function setupGui(cameras, net) {
  */
 function setupFPS() {
   stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-  document.body.prepend(stats.domElement);
-  stats.domElement.style.position = 'absolute';
-  stats.domElement.style.marginTop = '5.2%';
-  stats.domElement.style.marginLeft = '0';
+  document.getElementById('main').appendChild(stats.domElement);
 }
 
 /**

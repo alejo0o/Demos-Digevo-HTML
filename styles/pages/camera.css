@@ -63,3 +63,8 @@
 .spinner-text {
   float: left;
 }
+#main {
+  margin-top: 3%;
+  display: none;
+  height: 34em;
+}

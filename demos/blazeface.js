@@ -25,10 +25,7 @@ import regeneratorRuntime from 'regenerator-runtime';
 
 const stats = new Stats();
 stats.showPanel(0);
-document.body.prepend(stats.domElement);
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.marginTop = '5.2%';
-stats.domElement.style.marginLeft = '0';
+document.getElementById('main').appendChild(stats.domElement);
 
 let model, ctx, videoWidth, videoHeight, camera, canvas;
 
@@ -42,11 +39,8 @@ gui
   .onChange(async (backend) => {
     await tf.setBackend(backend);
   });
-document.body.prepend(gui.domElement);
-gui.domElement.style.position = 'absolute';
-// gui.domElement.style.display = 'block';
-gui.domElement.style.marginTop = '5.2%';
-gui.domElement.style.marginLeft = '78%';
+
+document.getElementById('main').appendChild(gui.domElement);
 
 async function setupCamera() {
   camera = document.getElementById('video');

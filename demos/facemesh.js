@@ -95,10 +95,7 @@ function setupDatGui() {
         : 'none';
     });
   }
-  document.body.prepend(gui.domElement);
-  gui.domElement.style.position = 'absolute';
-  gui.domElement.style.marginTop = '5.2%';
-  gui.domElement.style.marginLeft = '78%';
+  document.getElementById('main').appendChild(gui.domElement);
 }
 
 async function setupCamera() {

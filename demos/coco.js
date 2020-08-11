@@ -32,6 +32,7 @@ import {
   updateTryResNetButtonDatGuiCss,
 } from './demo_util';
 
+import Stats from 'stats.js';
 import dat from 'dat.gui';
 
 // clang-format on
@@ -226,10 +227,8 @@ let guiState = {
 function setupGui(net) {
   guiState.net = net;
   const gui = new dat.GUI();
-  document.body.prepend(gui.domElement);
-  gui.domElement.style.position = 'absolute';
-  gui.domElement.style.marginTop = '5.2%';
-  gui.domElement.style.marginLeft = '78%';
+
+  document.getElementById('main').appendChild(gui.domElement);
 
   let architectureController = null;
   guiState[tryResNetButtonName] = function () {
@@ -237,7 +236,6 @@ function setupGui(net) {
   };
   gui.add(guiState, tryResNetButtonName).name(tryResNetButtonText);
   updateTryResNetButtonDatGuiCss();
-
   // Input resolution:  Internally, this parameter affects the height and width
   // of the layers in the neural network. The higher the value of the input
   // resolution the better the accuracy but slower the speed.
@@ -253,6 +251,7 @@ function setupGui(net) {
       'inputResolution',
       inputResolutionArray
     );
+
     inputResolutionController.onChange(async function (inputResolution) {
       guiState.model.inputResolution = +inputResolution;
       reloadNetTestImageAndEstimatePoses(guiState.net);
@@ -282,6 +281,7 @@ function setupGui(net) {
   // the MobileNet. The higher the value, the higher the accuracy but slower the
   // speed, the lower the value the faster the speed but lower the accuracy.
   let multiplierController = null;
+
   function updateGuiMultiplier(multiplierArray) {
     if (multiplierController) {
       multiplierController.remove();
@@ -357,6 +357,7 @@ function setupGui(net) {
   gui
     .add(guiState, 'image', images)
     .onChange(() => testImageAndEstimatePoses(guiState.net));
+
   // Pose confidence: the overall confidence in the estimation of a person's
   // pose (i.e. a person detected in a frame)
   // Min part confidence: the confidence that a particular estimated keypoint
@@ -402,6 +403,7 @@ export async function bindPage() {
   toggleLoadingUI(false);
   setupGui(net);
   await testImageAndEstimatePoses(net);
+  setupFPS();
 }
 
 bindPage();

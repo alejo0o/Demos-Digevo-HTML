@@ -3,16 +3,15 @@ h4,
 p {
   margin: 10px 0;
 }
-
-#main ul {
+/* #main ul {
   margin: 10px 0;
   padding: 0;
-}
+} */
 
-#main li {
+/* #main li {
   list-style-type: none;
   display: inline-block;
-}
+} */
 
 #results > div {
   display: inline-block;
