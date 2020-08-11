@@ -30,8 +30,8 @@ import {
 import Stats from 'stats.js';
 import dat from 'dat.gui';
 
-const videoWidth = 600;
-const videoHeight = 500;
+const videoWidth = 650;
+const videoHeight = 550;
 const stats = new Stats();
 
 /**
@@ -333,9 +333,6 @@ function setupGui(cameras, net) {
 function setupFPS() {
   stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
   document.body.prepend(stats.domElement);
-  stats.domElement.style.position = 'absolute';
-  stats.domElement.style.marginTop = '5.2%';
-  stats.domElement.style.marginLeft = '0';
 }
 
 /**
@@ -514,7 +511,6 @@ export async function bindPage() {
     multiplier: guiState.input.multiplier,
     quantBytes: guiState.input.quantBytes,
   });
-  toggleLoadingUI(false);
 
   let video;
 
@@ -528,7 +524,7 @@ export async function bindPage() {
     info.style.display = 'block';
     throw e;
   }
-
+  toggleLoadingUI(false);
   setupGui([], net);
   setupFPS();
   detectPoseInRealTime(video, net);

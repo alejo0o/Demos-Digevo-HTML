@@ -18,17 +18,18 @@
 import * as blazeface from '@tensorflow-models/blazeface';
 import * as tf from '@tensorflow/tfjs-core';
 import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
-
+import { toggleLoadingUI } from './demo_util';
 import regeneratorRuntime from 'regenerator-runtime';
 
 // tfjsWasm.setWasmPath('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@latest/dist/tfjs-backend-wasm.wasm');
 
 const stats = new Stats();
 stats.showPanel(0);
-document.body.prepend(stats.domElement);
+document.getElementById('main').append(stats.domElement);
+/*document.body.prepend(stats.domElement);
 stats.domElement.style.position = 'absolute';
 stats.domElement.style.marginTop = '5.2%';
-stats.domElement.style.marginLeft = '0';
+stats.domElement.style.marginLeft = '0';*/
 
 let model, ctx, videoWidth, videoHeight, camera, canvas;
 
@@ -42,11 +43,13 @@ gui
   .onChange(async (backend) => {
     await tf.setBackend(backend);
   });
-document.body.prepend(gui.domElement);
+
+document.getElementById('main').appendChild(gui.domElement);
+/*document.body.prepend(gui.domElement);
 gui.domElement.style.position = 'absolute';
 // gui.domElement.style.display = 'block';
 gui.domElement.style.marginTop = '5.2%';
-gui.domElement.style.marginLeft = '78%';
+gui.domElement.style.marginLeft = '78%';*/
 
 async function setupCamera() {
   camera = document.getElementById('video');
@@ -114,6 +117,7 @@ const renderPrediction = async () => {
 };
 
 const setupPage = async () => {
+  toggleLoadingUI(true);
   await tf.setBackend(state.backend);
   await setupCamera();
   camera.play();
@@ -132,6 +136,7 @@ const setupPage = async () => {
   model = await blazeface.load();
 
   renderPrediction();
+  toggleLoadingUI(false);
 };
 
 setupPage();

@@ -57,6 +57,7 @@ function isMobile() {
 }
 
 async function getVideoInputs() {
+  toggleLoadingUI(true);
   if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
     console.log('enumerateDevices() not supported.');
     return [];
@@ -65,7 +66,7 @@ async function getVideoInputs() {
   const devices = await navigator.mediaDevices.enumerateDevices();
 
   const videoDevices = devices.filter((device) => device.kind === 'videoinput');
-
+  toggleLoadingUI(false);
   return videoDevices;
 }
 
@@ -122,6 +123,7 @@ async function getConstraints(cameraLabel) {
  *
  */
 async function setupCamera(cameraLabel) {
+  toggleLoadingUI(true);
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     throw new Error(
       'Browser API navigator.mediaDevices.getUserMedia not available'
@@ -139,7 +141,7 @@ async function setupCamera(cameraLabel) {
     video: videoConstraints,
   });
   videoElement.srcObject = stream;
-
+  toggleLoadingUI(false);
   return new Promise((resolve) => {
     videoElement.onloadedmetadata = () => {
       videoElement.width = videoElement.videoWidth;
@@ -150,6 +152,7 @@ async function setupCamera(cameraLabel) {
 }
 
 async function loadVideo(cameraLabel) {
+  toggleLoadingUI(true);
   try {
     state.video = await setupCamera(cameraLabel);
   } catch (e) {
@@ -162,6 +165,7 @@ async function loadVideo(cameraLabel) {
   }
 
   state.video.play();
+  toggleLoadingUI(false);
 }
 
 const defaultQuantBytes = 2;
@@ -227,6 +231,7 @@ function toCameraOptions(cameras) {
  * Sets up dat.gui controller on the top-right of the window
  */
 function setupGui(cameras) {
+  toggleLoadingUI(true);
   const gui = new dat.GUI({ width: 300 });
 
   let architectureController = null;
@@ -556,6 +561,7 @@ function setupGui(cameras) {
       document.body.removeChild(stats.dom);
     }
   });
+  toggleLoadingUI(false);
 }
 
 function setShownPartColorScales(colorScale) {
@@ -685,6 +691,7 @@ async function loadBodyPix() {
  * magic happens. This function loops with a requestAnimationFrame method.
  */
 function segmentBodyInRealTime() {
+  toggleLoadingUI(true);
   const canvas = document.getElementById('output');
   // since images are being fed from a webcam
 
@@ -807,6 +814,7 @@ function segmentBodyInRealTime() {
   }
 
   bodySegmentationFrame();
+  toggleLoadingUI(false);
 }
 
 /**
@@ -814,9 +822,8 @@ function segmentBodyInRealTime() {
  */
 export async function bindPage() {
   // Load the BodyPix model weights with architecture 0.75
+  toggleLoadingUI(true);
   await loadBodyPix();
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('main').style.display = 'inline-block';
 
   await loadVideo(guiState.camera);
 
@@ -826,6 +833,7 @@ export async function bindPage() {
   setupGui(cameras);
 
   segmentBodyInRealTime();
+  toggleLoadingUI(false);
 }
 
 navigator.getUserMedia =

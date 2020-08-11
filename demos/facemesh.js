@@ -18,7 +18,7 @@
 import * as facemesh from '@tensorflow-models/facemesh';
 import * as tf from '@tensorflow/tfjs-core';
 import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
-
+import { toggleLoadingUI } from './demo_util';
 import Stats from 'stats.js';
 import { TRIANGULATION } from './triangulation';
 // TODO(annxingyuan): read version from tfjsWasm directly once
@@ -58,7 +58,7 @@ let model,
   scatterGLHasInitialized = false,
   scatterGL;
 
-const VIDEO_SIZE = 500;
+let VIDEO_SIZE = 415;
 const mobile = isMobile();
 // Don't render the point cloud on mobile in order to maximize performance and
 // to avoid crowding limited screen space.
@@ -191,6 +191,7 @@ async function renderPrediction() {
 }
 
 async function main() {
+  toggleLoadingUI(true);
   await tf.setBackend(state.backend);
   setupDatGui();
 
@@ -208,7 +209,7 @@ async function main() {
   canvas.width = videoWidth;
   canvas.height = videoHeight;
   const canvasContainer = document.querySelector('.canvas-wrapper');
-  canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px`;
+  canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px;`;
 
   ctx = canvas.getContext('2d');
   ctx.translate(canvas.width, 0);
@@ -230,6 +231,7 @@ async function main() {
       selectEnabled: false,
     });
   }
+  toggleLoadingUI(false);
 }
 
 main();

@@ -16,6 +16,7 @@
  */
 import * as posenet from '@tensorflow-models/posenet';
 import * as tf from '@tensorflow/tfjs';
+import Nprogress from 'nprogress';
 
 // clang-format off
 import {
@@ -123,9 +124,13 @@ function drawMultiplePosesResults() {
   );
 }
 
-function setStatusText(text) {
-  const resultElement = document.getElementById('status');
-  resultElement.innerText = text;
+function setStatusText(verificacion) {
+  const resultElement = document.getElementById('lds-ring');
+  if (verificacion) {
+    resultElement.style.visibility = 'visible';
+  } else {
+    resultElement.style.visibility = 'hidden';
+  }
 }
 
 /**
@@ -142,7 +147,9 @@ function disposePoses() {
  * calculates poses based on the model outputs
  */
 async function testImageAndEstimatePoses(net) {
-  setStatusText('Predicting...');
+  setStatusText(true);
+  Nprogress.start();
+
   document.getElementById('results').style.display = 'none';
 
   // Purge prevoius variables and free up GPU memory
@@ -167,7 +174,8 @@ async function testImageAndEstimatePoses(net) {
   // Draw poses.
   drawMultiplePosesResults();
 
-  setStatusText('');
+  setStatusText(false);
+  Nprogress.done();
   document.getElementById('results').style.display = 'block';
   input.dispose();
 }

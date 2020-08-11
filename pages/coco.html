@@ -10,11 +10,13 @@
   <link href="../styles/footer.css" type="text/css" rel="stylesheet" />
   <link href="../styles/descripcion.css" type="text/css" rel="stylesheet" />
   <link href="../styles/pages/coco.css" type="text/css" rel="stylesheet" />
+  <link href="../styles/spinner.css" type="text/css" rel="stylesheet" />
   <!-- CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" crossorigin="anonymous" />
 
 
 </head>
@@ -22,7 +24,7 @@
 <body>
   <!-- NavBar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
-    <a class="navbar-brand" href="#" id="logo">DIGEVO </a>
+    <a class="navbar-brand" href="/" id="logo">DIGEVO </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -55,16 +57,17 @@
     </div>
   </nav>
   <!-- Estructura -->
-   <div id="principal">
-      <div id="global">
-        <div id="title">Image demo</div>
-        <div id="icon">
-          <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
-        </div>
+  <!-- Description -->
+  <div id="principal">
+    <div id="global">
+      <div id="title">Image demo</div>
+      <div id="icon">
+        <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
       </div>
-      <div id="description">
-        <p>
-         PoseNet runs with either a
+    </div>
+    <div id="description">
+      <p>
+        PoseNet runs with either a
         <strong>single-pose</strong> or
         <strong>multi-pose</strong> detection algorithm. The multi-pose detector is shown here.
         <br>
@@ -73,21 +76,24 @@
         <strong>input image resolution</strong> have the largest effects on accuracy/speed. A
         <i>higher</i> output stride results in lower accuracy but higher speed. A
         <i>higher</i> input image resolution results in higher accuracy but lower speed.
-        </p>
-      </div>
+      </p>
     </div>
-  <div id="loading" style='display:flex'>
-    <div class="spinner-text">
-      Loading PoseNet model...
-    </div>
-    <div class="sk-spinner sk-spinner-pulse"></div>
   </div>
-  <div id='main'>
+  <!-- Video  -->
+  </div>
+  <div id='main' style="visibility: hidden;">
+    <div id="lds-ring" style="top:30%;">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <div id="status"></div>
     <div id='results' style='display:none'>
       <div id="multi">
-       
-        <canvas></canvas>
+        <div class="submulti">
+          <canvas></canvas>
+        </div>
       </div>
     </div>
   </div>
