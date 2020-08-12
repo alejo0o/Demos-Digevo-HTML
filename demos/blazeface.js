@@ -20,12 +20,13 @@ import * as tf from '@tensorflow/tfjs-core';
 import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
 
 import regeneratorRuntime from 'regenerator-runtime';
+import { toggleLoadingUI } from './demo_util';
 
 // tfjsWasm.setWasmPath('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@latest/dist/tfjs-backend-wasm.wasm');
 
 const stats = new Stats();
 stats.showPanel(0);
-document.getElementById('main').appendChild(stats.domElement);
+document.getElementById('stats').appendChild(stats.domElement);
 
 let model, ctx, videoWidth, videoHeight, camera, canvas;
 
@@ -40,7 +41,7 @@ gui
     await tf.setBackend(backend);
   });
 
-document.getElementById('main').appendChild(gui.domElement);
+document.getElementById('gui').appendChild(gui.domElement);
 
 async function setupCamera() {
   camera = document.getElementById('video');
@@ -108,6 +109,7 @@ const renderPrediction = async () => {
 };
 
 const setupPage = async () => {
+  toggleLoadingUI(true);
   await tf.setBackend(state.backend);
   await setupCamera();
   camera.play();
@@ -126,6 +128,7 @@ const setupPage = async () => {
   model = await blazeface.load();
 
   renderPrediction();
+  toggleLoadingUI(false);
 };
 
 setupPage();

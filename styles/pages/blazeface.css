@@ -6,8 +6,22 @@ body {
 #main {
   position: relative;
   margin: 50px 0;
-  height: 35em;
   /* border: solid red; */
+  /*background-color: green;*/
+  height: 30em;
+}
+.submain {
+  /*background-color: red;*/
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 30em;
+  border-style: ridge;
+  border-radius: 1.5em;
+  -webkit-box-shadow: 15px 15px 3px 1px rgb(0, 0, 0);
+  -moz-box-shadow: 15px 15px 3px 1px rgb(6, 7, 7);
+  box-shadow: 15px 15px 3px 1px rgb(17, 17, 17);
 }
 
 #output {
@@ -16,5 +30,18 @@ body {
   left: 0;
 }
 #video {
-  /* width: 60%; */
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  width: auto;
+  height: auto;
+  border-radius: 1.5em;
+}
+#controls {
+  display: flex;
+  flex-direction: row;
+  margin: 2em;
+}
+
+#gui {
+  margin-left: auto;
 }

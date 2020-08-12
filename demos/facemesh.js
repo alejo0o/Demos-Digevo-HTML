@@ -21,6 +21,7 @@ import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
 
 import Stats from 'stats.js';
 import { TRIANGULATION } from './triangulation';
+import { toggleLoadingUI } from './demo_util';
 // TODO(annxingyuan): read version from tfjsWasm directly once
 // https://github.com/tensorflow/tfjs/pull/2819 is merged.
 import { version } from '@tensorflow/tfjs-backend-wasm/dist/version';
@@ -58,7 +59,7 @@ let model,
   scatterGLHasInitialized = false,
   scatterGL;
 
-const VIDEO_SIZE = 500;
+let VIDEO_SIZE = 415;
 const mobile = isMobile();
 // Don't render the point cloud on mobile in order to maximize performance and
 // to avoid crowding limited screen space.
@@ -95,7 +96,7 @@ function setupDatGui() {
         : 'none';
     });
   }
-  document.getElementById('main').appendChild(gui.domElement);
+  document.getElementById('gui').appendChild(gui.domElement);
 }
 
 async function setupCamera() {
@@ -188,11 +189,15 @@ async function renderPrediction() {
 }
 
 async function main() {
+  toggleLoadingUI(true);
   await tf.setBackend(state.backend);
   setupDatGui();
 
   stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-  document.getElementById('main').appendChild(stats.dom);
+  document.body.prepend(stats.domElement);
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.marginLeft = '2%';
+  stats.domElement.style.marginTop = '17.8em';
 
   await setupCamera();
   video.play();
@@ -205,7 +210,7 @@ async function main() {
   canvas.width = videoWidth;
   canvas.height = videoHeight;
   const canvasContainer = document.querySelector('.canvas-wrapper');
-  canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px`;
+  canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px;`;
 
   ctx = canvas.getContext('2d');
   ctx.translate(canvas.width, 0);
@@ -227,6 +232,7 @@ async function main() {
       selectEnabled: false,
     });
   }
+  toggleLoadingUI(false);
 }
 
 main();

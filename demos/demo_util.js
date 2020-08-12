@@ -16,6 +16,7 @@
  */
 import * as posenet from '@tensorflow-models/posenet';
 import * as tf from '@tensorflow/tfjs';
+import Nprogress from 'nprogress';
 
 const color = 'aqua';
 const boundingBoxColor = 'red';
@@ -53,25 +54,32 @@ function setDatGuiPropertyCss(propertyText, liCssString, spanCssString = '') {
 
 export function updateTryResNetButtonDatGuiCss() {
   setDatGuiPropertyCss(
-      tryResNetButtonText, tryResNetButtonBackgroundCss,
-      tryResNetButtonTextCss);
+    tryResNetButtonText,
+    tryResNetButtonBackgroundCss,
+    tryResNetButtonTextCss
+  );
 }
 
 /**
  * Toggles between the loading UI and the main canvas UI.
  */
 export function toggleLoadingUI(
-    showLoadingUI, loadingDivId = 'loading', mainDivId = 'main') {
+  showLoadingUI,
+  loadingDivId = 'lds-ring',
+  mainDivId = 'main'
+) {
   if (showLoadingUI) {
-    document.getElementById(loadingDivId).style.display = 'block';
-    document.getElementById(mainDivId).style.display = 'none';
+    Nprogress.start();
+    document.getElementById(loadingDivId).style.visibility = 'visible';
+    document.getElementById(mainDivId).style.visibility = 'hidden';
   } else {
-    document.getElementById(loadingDivId).style.display = 'none';
-    document.getElementById(mainDivId).style.display = 'block';
+    Nprogress.done();
+    document.getElementById(loadingDivId).style.visibility = 'hidden';
+    document.getElementById(mainDivId).style.visibility = 'visible';
   }
 }
 
-function toTuple({y, x}) {
+function toTuple({ y, x }) {
   return [y, x];
 }
 
@@ -98,13 +106,19 @@ export function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
  * Draws a pose skeleton by looking up all adjacent keypoints/joints
  */
 export function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
-  const adjacentKeyPoints =
-      posenet.getAdjacentKeyPoints(keypoints, minConfidence);
+  const adjacentKeyPoints = posenet.getAdjacentKeyPoints(
+    keypoints,
+    minConfidence
+  );
 
   adjacentKeyPoints.forEach((keypoints) => {
     drawSegment(
-        toTuple(keypoints[0].position), toTuple(keypoints[1].position), color,
-        scale, ctx);
+      toTuple(keypoints[0].position),
+      toTuple(keypoints[1].position),
+      color,
+      scale,
+      ctx
+    );
   });
 }
 
@@ -119,7 +133,7 @@ export function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
       continue;
     }
 
-    const {y, x} = keypoint.position;
+    const { y, x } = keypoint.position;
     drawPoint(ctx, y * scale, x * scale, 3, color);
   }
 }
@@ -133,8 +147,11 @@ export function drawBoundingBox(keypoints, ctx) {
   const boundingBox = posenet.getBoundingBox(keypoints);
 
   ctx.rect(
-      boundingBox.minX, boundingBox.minY, boundingBox.maxX - boundingBox.minX,
-      boundingBox.maxY - boundingBox.minY);
+    boundingBox.minX,
+    boundingBox.minY,
+    boundingBox.maxX - boundingBox.minX,
+    boundingBox.maxY - boundingBox.minY
+  );
 
   ctx.strokeStyle = boundingBoxColor;
   ctx.stroke();
@@ -212,9 +229,17 @@ function drawPoints(ctx, points, radius, color) {
  * https://medium.com/tensorflow/real-time-human-pose-estimation-in-the-browser-with-tensorflow-js-7dd0bc881cd5
  */
 export function drawOffsetVectors(
-    heatMapValues, offsets, outputStride, scale = 1, ctx) {
-  const offsetPoints =
-      posenet.singlePose.getOffsetPoints(heatMapValues, outputStride, offsets);
+  heatMapValues,
+  offsets,
+  outputStride,
+  scale = 1,
+  ctx
+) {
+  const offsetPoints = posenet.singlePose.getOffsetPoints(
+    heatMapValues,
+    outputStride,
+    offsets
+  );
 
   const heatmapData = heatMapValues.buffer().values;
   const offsetPointsData = offsetPoints.buffer().values;
@@ -226,6 +251,11 @@ export function drawOffsetVectors(
     const offsetPointX = offsetPointsData[i + 1];
 
     drawSegment(
-        [heatmapY, heatmapX], [offsetPointY, offsetPointX], color, scale, ctx);
+      [heatmapY, heatmapX],
+      [offsetPointY, offsetPointX],
+      color,
+      scale,
+      ctx
+    );
   }
 }

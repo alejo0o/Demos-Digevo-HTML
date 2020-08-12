@@ -23,17 +23,19 @@ limitations under the License.
   <link href="../styles/navbar.css" type="text/css" rel="stylesheet" />
   <link href="../styles/footer.css" type="text/css" rel="stylesheet" />
   <link href="../styles/pages/facemesh.css" type="text/css" rel="stylesheet" />
-  <link href="../styles/descripcion.css" type="text/css"  rel="stylesheet" />
+  <link href="../styles/descripcion.css" type="text/css" rel="stylesheet" />
+  <link href="../styles/spinner.css" type="text/css" rel="stylesheet" />
   <!-- CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" crossorigin="anonymous" />
   <!-- Load three.js -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
   <!-- Load scatter-gl.js -->
   <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
-  
+
 </head>
 
 <body>
@@ -72,33 +74,34 @@ limitations under the License.
     </div>
   </nav>
   <!-- Body -->
+  <!-- Descripcion -->
   <div id="principal">
-      <div id="global">
-        <div id="title">Facemesh demo</div>
-        <div id="icon">
-          <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
-        </div>
-      </div>
-      <div id="description">
-        <p>
-          This demo 
-        </p>
+    <div id="global">
+      <div id="title">Facemesh demo</div>
+      <div id="icon">
+        <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
       </div>
     </div>
-  <div id="main">
+    <div id="description">
+      <p>
+        This demo
+      </p>
+    </div>
+  </div>
+  <!-- Video -->
+  <div id="main" style="visibility: hidden;">
+    <div id="gui"></div>
+  
+    <div id="lds-ring" style="top:60%;">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <div class="container">
       <div class="canvas-wrapper">
-        <canvas id="output" playsinline style="
-          position: absolute;
-
-          "></canvas>
-        <video id="video" playsinline style="
-          -webkit-transform: scaleX(-1);
-          transform: scaleX(-1);
-          visibility: hidden;
-          width: auto;
-          height: auto;
-          ">
+        <canvas id="output" playsinline></canvas>
+        <video id="video" playsinline></video>
         </video>
       </div>
       <div id="scatter-gl-container"></div>
@@ -127,7 +130,7 @@ limitations under the License.
     </div>
   </footer>
   <!-- CNDS -->
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"

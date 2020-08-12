@@ -1,22 +1,20 @@
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  color: black;
+#main {
+  position: relative;
+  margin: 50px 0;
+  /* border: solid red; */
+  /*background-color: green;*/
+  height: 35em;
 }
-
-.footer-text {
-  max-width: 600px;
-  text-align: center;
-  margin: auto;
-}
-
-@media only screen and (max-width: 600px) {
-  .footer-text,
-  .dg {
-    display: none;
-  }
+#output {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  border-style: ridge;
+  border-radius: 1em;
+  -webkit-box-shadow: 15px 15px 3px 1px rgb(0, 0, 0);
+  -moz-box-shadow: 15px 15px 3px 1px rgb(6, 7, 7);
+  box-shadow: 15px 15px 3px 1px rgb(17, 17, 17);
 }
 
 /*
@@ -62,9 +60,4 @@
 
 .spinner-text {
   float: left;
-}
-#main {
-  margin-top: 3%;
-  display: none;
-  height: 34em;
 }

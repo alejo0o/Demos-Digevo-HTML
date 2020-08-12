@@ -32,6 +32,7 @@ import {
   updateTryResNetButtonDatGuiCss,
 } from './demo_util';
 
+import Nprogress from 'nprogress';
 import Stats from 'stats.js';
 import dat from 'dat.gui';
 
@@ -124,9 +125,13 @@ function drawMultiplePosesResults() {
   );
 }
 
-function setStatusText(text) {
-  const resultElement = document.getElementById('status');
-  resultElement.innerText = text;
+function setStatusText(verificacion) {
+  const resultElement = document.getElementById('lds-ring');
+  if (verificacion) {
+    resultElement.style.visibility = 'visible';
+  } else {
+    resultElement.style.visibility = 'hidden';
+  }
 }
 
 /**
@@ -143,7 +148,9 @@ function disposePoses() {
  * calculates poses based on the model outputs
  */
 async function testImageAndEstimatePoses(net) {
-  setStatusText('Predicting...');
+  setStatusText(true);
+  Nprogress.start();
+
   document.getElementById('results').style.display = 'none';
 
   // Purge prevoius variables and free up GPU memory
@@ -168,7 +175,8 @@ async function testImageAndEstimatePoses(net) {
   // Draw poses.
   drawMultiplePosesResults();
 
-  setStatusText('');
+  setStatusText(false);
+  Nprogress.done();
   document.getElementById('results').style.display = 'block';
   input.dispose();
 }
@@ -228,7 +236,7 @@ function setupGui(net) {
   guiState.net = net;
   const gui = new dat.GUI();
 
-  document.getElementById('main').appendChild(gui.domElement);
+  document.getElementById('gui').appendChild(gui.domElement);
 
   let architectureController = null;
   guiState[tryResNetButtonName] = function () {

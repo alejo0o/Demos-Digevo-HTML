@@ -10,11 +10,13 @@
   <link rel="stylesheet" type="text/css" href="../styles/footer.css" />
   <link rel="stylesheet" type="text/css" href="../styles/descripcion.css" />
   <link rel="stylesheet" type="text/css" href="../styles/pages/body-pix.css" />
+  <link href="../styles/spinner.css" type="text/css" rel="stylesheet" />
   <!-- CDN'S -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" crossorigin="anonymous" />
 
 </head>
 
@@ -54,15 +56,16 @@
     </div>
   </nav>
   <!-- Estructura -->
+  <!-- Description -->
   <div id="principal">
-      <div id="global">
-        <div id="title">Body-pix demo</div>
-        <div id="icon">
-          <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
-        </div>
+    <div id="global">
+      <div id="title">Body-pix demo</div>
+      <div id="icon">
+        <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
       </div>
-      <div id="description">
-        <p>
+    </div>
+    <div id="description">
+      <p>
         The BodyPix model can estimate which pixels in an image are part of a person, and which pixels
         are part of each of 24 body parts. It works for <strong>multiple people</strong> in an input image or video.
         <br>
@@ -74,20 +77,24 @@
         both
         <i>architecture</i> and <i>multiplier</i> dropdown, results in higher accuracy but lower speed.
       </p>
-      </div>
     </div>
-  <div id="stats"></div>
+  </div>
+  <!-- Video -->
   <div id="info" style='display:none'>
   </div>
-  <div id="loading" style='display:flex'>
-    <div class="spinner-text">
-      Loading BodyPix model...
+  <div id='main' style="visibility: hidden;">
+    <div id="stats"></div>
+      <div id="gui"></div>
+    <div class="submain">
+      <div id="lds-ring" style="top:90%;">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <video id="video" playsinline style="display: none;"></video>
+      <canvas id="output">
     </div>
-    <div class="sk-spinner sk-spinner-pulse"></div>
-  </div>
-  <div id='main' style='display:none'>
-    <video id="video" playsinline style="display: none;"></video>
-    <canvas id="output">
   </div>
   <ul id="colors" style="display: none"></ul>
   <!-- FOOTER -->

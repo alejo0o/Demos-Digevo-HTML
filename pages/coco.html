@@ -24,105 +24,106 @@
     />
   </head>
 
-  <body>
-    <!-- NavBar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
-      <a class="navbar-brand" href="#" id="logo">DIGEVO </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digevo Demo-Images</title>
+  <!-- Styles -->
+  <link href="../styles/navbar.css" type="text/css" rel="stylesheet" />
+  <link href="../styles/footer.css" type="text/css" rel="stylesheet" />
+  <link href="../styles/descripcion.css" type="text/css" rel="stylesheet" />
+  <link href="../styles/pages/coco.css" type="text/css" rel="stylesheet" />
+  <link href="../styles/spinner.css" type="text/css" rel="stylesheet" />
+  <!-- CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" crossorigin="anonymous" />
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto" id="items">
-          <li class="nav-item active">
-            <a class="nav-link" href="/" id="option"
-              >Home <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              id="navbarDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              href=""
-              aria-expanded="false"
-            >
-              Demos
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="./blazeface.html"
-                >Blazeface Demo - Vision</a
-              >
-              <a class="dropdown-item" href="./body-pix.html"
-                >Body-pix Demo - Vision</a
-              >
-              <a class="dropdown-item" href="./facemesh.html"
-                >Facemesh Demo - Vision</a
-              >
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="./camera.html"
-                >Pose Estimation - Camera feed demo</a
-              >
-              <a class="dropdown-item" href="./coco.html"
-                >Pose Estimation - Image demo</a
-              >
-            </div>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              id="option"
-              rel="noreferrer"
-              target="_blank"
-              href="https://digevo.com/contacto/"
-              >Contacto</a
-            >
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <!-- Estructura -->
-    <div id="principal">
-      <div id="global">
-        <div id="title">Image demo</div>
-        <div id="icon">
-          <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
-        </div>
-      </div>
-      <div id="description">
-        <p>
-          PoseNet runs with either a
-          <strong>single-pose</strong> or <strong>multi-pose</strong> detection
-          algorithm. The multi-pose detector is shown here.
-          <br />
-          <br />
-          The <strong>output stride</strong> and
-          <strong>input image resolution</strong> have the largest effects on
-          accuracy/speed. A <i>higher</i> output stride results in lower
-          accuracy but higher speed. A <i>higher</i> input image resolution
-          results in higher accuracy but lower speed.
-        </p>
+
+</head>
+
+<body>
+  <!-- NavBar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
+    <a class="navbar-brand" href="/" id="logo">DIGEVO </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto" id="items">
+        <li class="nav-item active">
+          <a class="nav-link" href="/" id="option">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" href="" aria-expanded="false">
+            Demos
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="./blazeface.html">Blazeface Demo - Vision</a>
+            <a class="dropdown-item" href="./body-pix.html">Body-pix Demo - Vision</a>
+            <a class="dropdown-item" href="./facemesh.html">Facemesh Demo - Vision</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="./camera.html">Pose Estimation - Camera feed demo</a>
+            <a class="dropdown-item" href="./coco.html">Pose Estimation - Image demo</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="option" rel='noreferrer' target='_blank'
+            href='https://digevo.com/contacto/'>Contacto</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- Estructura -->
+  <!-- Description -->
+  <div id="principal">
+    <div id="global">
+      <div id="title">Image demo</div>
+      <div id="icon">
+        <a><i class="far fa-arrow-alt-circle-down"></i>Prueba</a>
       </div>
     </div>
-    <div id="loading" style="display: flex;">
-      <div class="spinner-text">
-        Loading PoseNet model...
+    <div id="description">
+      <p>
+        PoseNet runs with either a
+        <strong>single-pose</strong> or
+        <strong>multi-pose</strong> detection algorithm. The multi-pose detector is shown here.
+        <br>
+        <br> The
+        <strong>output stride</strong> and
+        <strong>input image resolution</strong> have the largest effects on accuracy/speed. A
+        <i>higher</i> output stride results in lower accuracy but higher speed. A
+        <i>higher</i> input image resolution results in higher accuracy but lower speed.
+      </p>
+    </div>
+  </div>
+  <!-- Video  -->
+  </div>
+  <div id='main' style="visibility: hidden;">
+    <div id="lds-ring" style="top:30%;">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div id="status"></div>
+    <div id='results' style='display:none'>
+      <div id="multi">
+    
+        <div class="submulti">
+          <canvas></canvas>
+        </div>
       </div>
       <div class="sk-spinner sk-spinner-pulse"></div>
     </div>
     <div id="main">
-      <div id="guiDiv"></div>
       <div id="status"></div>
+        <div id="gui"></div>
       <div id="results" style="display: none;">
         <div id="multi">
           <canvas></canvas>

@@ -3,16 +3,31 @@
   display: inline-block;
   vertical-align: top;
 }
-
+.canvas-wrapper {
+  margin-right: 4%;
+}
 #scatter-gl-container {
-  border: solid 1px black;
-  position: relative;
+  border-style: ridge;
+
+  -webkit-box-shadow: 15px 15px 3px 1px rgb(0, 0, 0);
+  -moz-box-shadow: 15px 15px 3px 1px rgb(6, 7, 7);
+  box-shadow: 15px 15px 3px 1px rgb(17, 17, 17);
 }
 
-/* center the canvas within its wrapper */
-#scatter-gl-container canvas {
-  transform: translate3d(-50%, -50%, 0);
-  left: 50%;
-  top: 50%;
-  position: absolute;
+#video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  visibility: hidden;
+}
+#output {
+  border-style: ridge;
+  border-radius: 1.5em;
+  -webkit-box-shadow: 15px 15px 3px 1px rgb(0, 0, 0);
+  -moz-box-shadow: 15px 15px 3px 1px rgb(6, 7, 7);
+  box-shadow: 15px 15px 3px 1px rgb(17, 17, 17);
+}
+#main {
+  height: 31.5em;
+  margin: 3em 0;
+  /*background-color: green;*/
 }

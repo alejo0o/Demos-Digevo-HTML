@@ -30,8 +30,8 @@ import {
 import Stats from 'stats.js';
 import dat from 'dat.gui';
 
-const videoWidth = 600;
-const videoHeight = 500;
+const videoWidth = 650;
+const videoHeight = 550;
 const stats = new Stats();
 
 /**
@@ -304,13 +304,12 @@ function setupGui(cameras, net) {
   output.add(guiState.output, 'showBoundingBox');
   output.open();
 
-  document.getElementById('main').appendChild(gui.domElement);
-
   architectureController.onChange(function (architecture) {
     // if architecture is ResNet50, then show ResNet50 options
     updateGui();
     guiState.changeToArchitecture = architecture;
   });
+  document.getElementById('gui').appendChild(gui.domElement);
 
   algorithmController.onChange(function (value) {
     switch (guiState.algorithm) {
@@ -331,7 +330,10 @@ function setupGui(cameras, net) {
  */
 function setupFPS() {
   stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-  document.getElementById('main').appendChild(stats.domElement);
+  document.body.prepend(stats.domElement);
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.marginLeft = '2%';
+  document.getElementById('stats').appendChild(stats.domElement);
 }
 
 /**
@@ -510,7 +512,6 @@ export async function bindPage() {
     multiplier: guiState.input.multiplier,
     quantBytes: guiState.input.quantBytes,
   });
-  toggleLoadingUI(false);
 
   let video;
 
@@ -524,7 +525,7 @@ export async function bindPage() {
     info.style.display = 'block';
     throw e;
   }
-
+  toggleLoadingUI(false);
   setupGui([], net);
   setupFPS();
   detectPoseInRealTime(video, net);
