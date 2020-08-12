@@ -18,9 +18,10 @@
 import * as facemesh from '@tensorflow-models/facemesh';
 import * as tf from '@tensorflow/tfjs-core';
 import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
-import { toggleLoadingUI } from './demo_util';
+
 import Stats from 'stats.js';
 import { TRIANGULATION } from './triangulation';
+import { toggleLoadingUI } from './demo_util';
 // TODO(annxingyuan): read version from tfjsWasm directly once
 // https://github.com/tensorflow/tfjs/pull/2819 is merged.
 import { version } from '@tensorflow/tfjs-backend-wasm/dist/version';
@@ -95,10 +96,7 @@ function setupDatGui() {
         : 'none';
     });
   }
-  document.body.prepend(gui.domElement);
-  gui.domElement.style.position = 'absolute';
-  gui.domElement.style.marginTop = '5.2%';
-  gui.domElement.style.marginLeft = '78%';
+  document.getElementById('gui').appendChild(gui.domElement);
 }
 
 async function setupCamera() {
@@ -196,7 +194,10 @@ async function main() {
   setupDatGui();
 
   stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-  document.getElementById('main').appendChild(stats.dom);
+  document.body.prepend(stats.domElement);
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.marginLeft = '2%';
+  stats.domElement.style.marginTop = '17.8em';
 
   await setupCamera();
   video.play();

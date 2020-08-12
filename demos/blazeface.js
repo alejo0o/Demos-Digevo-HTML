@@ -18,18 +18,15 @@
 import * as blazeface from '@tensorflow-models/blazeface';
 import * as tf from '@tensorflow/tfjs-core';
 import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
-import { toggleLoadingUI } from './demo_util';
+
 import regeneratorRuntime from 'regenerator-runtime';
+import { toggleLoadingUI } from './demo_util';
 
 // tfjsWasm.setWasmPath('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@latest/dist/tfjs-backend-wasm.wasm');
 
 const stats = new Stats();
 stats.showPanel(0);
-document.getElementById('main').append(stats.domElement);
-/*document.body.prepend(stats.domElement);
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.marginTop = '5.2%';
-stats.domElement.style.marginLeft = '0';*/
+document.getElementById('stats').appendChild(stats.domElement);
 
 let model, ctx, videoWidth, videoHeight, camera, canvas;
 
@@ -44,12 +41,7 @@ gui
     await tf.setBackend(backend);
   });
 
-document.getElementById('main').appendChild(gui.domElement);
-/*document.body.prepend(gui.domElement);
-gui.domElement.style.position = 'absolute';
-// gui.domElement.style.display = 'block';
-gui.domElement.style.marginTop = '5.2%';
-gui.domElement.style.marginLeft = '78%';*/
+document.getElementById('gui').appendChild(gui.domElement);
 
 async function setupCamera() {
   camera = document.getElementById('video');

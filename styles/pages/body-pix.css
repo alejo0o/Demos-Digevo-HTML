@@ -80,6 +80,11 @@
   box-shadow: 15px 15px 3px 1px rgb(17, 17, 17);
   margin-left: 25%;
 }
+#gui {
+  margin-top: 3em;
+  margin-left: 76%;
+  position: absolute;
+}
 
 /* mobile */
 @media only screen and (max-width: 850px) {

@@ -309,10 +309,8 @@ function setupGui(cameras, net) {
     updateGui();
     guiState.changeToArchitecture = architecture;
   });
-  document.body.prepend(gui.domElement);
-  gui.domElement.style.position = 'absolute';
-  gui.domElement.style.marginTop = '5.2%';
-  gui.domElement.style.marginLeft = '78%';
+  document.getElementById('gui').appendChild(gui.domElement);
+
   algorithmController.onChange(function (value) {
     switch (guiState.algorithm) {
       case 'single-pose':
@@ -333,6 +331,9 @@ function setupGui(cameras, net) {
 function setupFPS() {
   stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
   document.body.prepend(stats.domElement);
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.marginLeft = '2%';
+  document.getElementById('stats').appendChild(stats.domElement);
 }
 
 /**

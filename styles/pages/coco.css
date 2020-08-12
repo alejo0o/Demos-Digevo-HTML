@@ -16,18 +16,20 @@
   -moz-box-shadow: 15px 15px 3px 1px rgb(6, 7, 7);
   box-shadow: 15px 15px 3px 1px rgb(17, 17, 17);
 }
-
-#main ul {
+/* #main ul {
   margin: 10px 0;
   padding: 0;
-}
+} */
 
-#main li {
+/* #main li {
   list-style-type: none;
   display: inline-block;
-}
+} */
 
 #results > div {
   display: inline-block;
   width: 513px;
+}
+#gui {
+  margin-top: -3.5em;
 }

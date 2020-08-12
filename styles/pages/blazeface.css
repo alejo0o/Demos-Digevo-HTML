@@ -36,3 +36,12 @@ body {
   height: auto;
   border-radius: 1.5em;
 }
+#controls {
+  display: flex;
+  flex-direction: row;
+  margin: 2em;
+}
+
+#gui {
+  margin-left: auto;
+}

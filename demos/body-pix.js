@@ -270,11 +270,8 @@ function setupGui(cameras) {
   // The input parameters have the most effect on accuracy and speed of the
   // network
   let input = gui.addFolder('Input');
-  document.body.prepend(gui.domElement);
-  gui.domElement.style.position = 'absolute';
-  // gui.domElement.style.display = 'block';
-  gui.domElement.style.marginTop = '5.2%';
-  gui.domElement.style.marginLeft = '78%';
+  document.getElementById('gui').appendChild(gui.domElement);
+
   // Updates outputStride
   // Output stride:  Internally, this parameter affects the height and width
   // of the layers in the neural network. The lower the value of the output
@@ -589,10 +586,10 @@ function setShownPartColorScales(colorScale) {
 function setupFPS() {
   stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
   if (guiState.showFps) {
-    document.body.prepend(stats.domElement);
+    document.body.prepend(stats.dom);
     stats.domElement.style.position = 'absolute';
-    stats.domElement.style.marginTop = '5.2%';
-    stats.domElement.style.marginLeft = '0';
+    stats.domElement.style.marginLeft = '2%';
+    stats.domElement.style.marginTop = '30.8em';
   }
 }
 
