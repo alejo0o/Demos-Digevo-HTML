@@ -1,0 +1,20 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+/dist
+/.cache
+# testing
+/coverage
+
+# production
+/build
+*.log
+.dockerignore
+.git
+.gitignore
+build/*
+Dockerfile
+node_modules
+npm-debug.log*
+README.md
