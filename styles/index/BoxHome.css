@@ -133,35 +133,13 @@
     font-size: 1em;
   }
 }
-@keyframes animacion {
-  0% {
-    color: #000;
-    transform: translateY(15%);
-  }
-  33% {
-    color: rgb(13, 224, 183);
-    transform: translateY(-15px);
-  }
-  66% {
-    color: rgb(106, 27, 154);
-    transform: translateY(-15px);
-  }
-  100% {
-    color: rgb(36, 103, 217);
-    transform: translateY(15px);
-  }
-}
 .icon {
-  animation: animacion 0.5s 5;
   padding-left: 0.5em;
   font-size: large;
 }
-.icon a:link {
-  text-decoration: none;
-  animation: animacion 0.5s 5;
-}
 .icon a:visited,
-a:active {
+a:active,
+a:link {
   text-decoration: none;
   color: black;
 }
