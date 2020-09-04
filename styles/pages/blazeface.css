@@ -1,6 +1,6 @@
 body {
   margin: 2.5%;
-  font-family: 'VremenaGroteskRegular', sans-serif;
+  font-family: "VremenaGroteskRegular", sans-serif;
 }
 
 #main {
@@ -17,17 +17,17 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   height: 30em;
-  border-style: ridge;
-  border-radius: 1.5em;
-  -webkit-box-shadow: 15px 15px 3px 1px rgb(0, 0, 0);
-  -moz-box-shadow: 15px 15px 3px 1px rgb(6, 7, 7);
-  box-shadow: 15px 15px 3px 1px rgb(17, 17, 17);
 }
 
 #output {
   position: absolute;
   top: 0;
   left: 0;
+  border-style: ridge;
+  border-radius: 1em;
+  -webkit-box-shadow: 15px 15px 3px 1px rgb(0, 0, 0);
+  -moz-box-shadow: 15px 15px 3px 1px rgb(6, 7, 7);
+  box-shadow: 15px 15px 3px 1px rgb(17, 17, 17);
 }
 #video {
   -webkit-transform: scaleX(-1);
@@ -44,4 +44,95 @@ body {
 
 #gui {
   margin-left: auto;
+}
+@media only screen and (max-width: 1200px) {
+  #main {
+    position: relative;
+    margin: 50px 0;
+    height: 25em;
+  }
+  .submain {
+    box-sizing: content-box;
+    position: absolute;
+    width: 45%;
+    height: 82.4%;
+    top: 40%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+  }
+  #output {
+    box-sizing: content-box;
+    width: 95%;
+    height: 100%;
+  }
+  #video {
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 2.5em;
+  }
+  #controls {
+    margin-top: 8em;
+  }
+}
+@media only screen and (max-width: 850px) {
+  #main {
+    position: relative;
+    margin: 35px 0;
+    height: 25em;
+  }
+  .submain {
+    box-sizing: content-box;
+    position: absolute;
+    width: 55%;
+    height: 78%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  #output {
+    box-sizing: content-box;
+    width: 95%;
+    height: 100%;
+  }
+  #video {
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 2em;
+  }
+  #controls {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  #controls {
+    display: none;
+  }
+  #main {
+    position: relative;
+    margin: 35px 0;
+    height: 25em;
+  }
+  .submain {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: content-box;
+    width: 60%;
+    height: 45%;
+  }
+  #output {
+    box-sizing: content-box;
+    width: 100%;
+    height: 95%;
+  }
+  #video {
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5em;
+  }
 }

@@ -31,3 +31,41 @@
   margin: 3em 0;
   /*background-color: green;*/
 }
+@media only screen and (max-width: 1200px) {
+  #gui,
+  #stats {
+    display: none;
+  }
+  #main {
+    position: relative;
+    margin: 40px 0;
+    left: 5%;
+    height: 30em;
+  }
+}
+@media only screen and (max-width: 850px) {
+  #gui,
+  #stats,
+  #scatter-gl-container {
+    display: none;
+  }
+  #main {
+    position: relative;
+    margin: 40px 0;
+    left: 15%;
+    height: 30em;
+  }
+}
+@media only screen and (max-width: 576px) {
+  #gui,
+  #stats,
+  #scatter-gl-container {
+    display: none;
+  }
+  #main {
+    position: relative;
+    margin: 35px 0;
+    left: 10%;
+    height: 25em;
+  }
+}

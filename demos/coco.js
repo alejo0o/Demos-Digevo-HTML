@@ -14,8 +14,8 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as posenet from '@tensorflow-models/posenet';
-import * as tf from '@tensorflow/tfjs';
+import * as posenet from "@tensorflow-models/posenet";
+import * as tf from "@tensorflow/tfjs";
 
 // clang-format off
 import {
@@ -23,46 +23,46 @@ import {
   drawKeypoints,
   drawSkeleton,
   renderImageToCanvas,
-} from './demo_util';
+} from "./demo_util";
 import {
   isMobile,
   toggleLoadingUI,
   tryResNetButtonName,
   tryResNetButtonText,
   updateTryResNetButtonDatGuiCss,
-} from './demo_util';
+} from "./demo_util";
 
-import Nprogress from 'nprogress';
-import Stats from 'stats.js';
-import dat from 'dat.gui';
+import Nprogress from "nprogress";
+import Stats from "stats.js";
+import dat from "dat.gui";
 
 // clang-format on
 
 const images = [
-  'frisbee.jpg',
-  'frisbee_2.jpg',
-  'backpackman.jpg',
-  'boy_doughnut.jpg',
-  'soccer.png',
-  'with_computer.jpg',
-  'snowboard.jpg',
-  'person_bench.jpg',
-  'skiing.jpg',
-  'fire_hydrant.jpg',
-  'kyte.jpg',
-  'looking_at_computer.jpg',
-  'tennis.jpg',
-  'tennis_standing.jpg',
-  'truck.jpg',
-  'on_bus.jpg',
-  'tie_with_beer.jpg',
-  'baseball.jpg',
-  'multi_skiing.jpg',
-  'riding_elephant.jpg',
-  'skate_park_venice.jpg',
-  'skate_park.jpg',
-  'tennis_in_crowd.jpg',
-  'two_on_bench.jpg',
+  "frisbee.jpg",
+  "frisbee_2.jpg",
+  "backpackman.jpg",
+  "boy_doughnut.jpg",
+  "soccer.png",
+  "with_computer.jpg",
+  "snowboard.jpg",
+  "person_bench.jpg",
+  "skiing.jpg",
+  "fire_hydrant.jpg",
+  "kyte.jpg",
+  "looking_at_computer.jpg",
+  "tennis.jpg",
+  "tennis_standing.jpg",
+  "truck.jpg",
+  "on_bus.jpg",
+  "tie_with_beer.jpg",
+  "baseball.jpg",
+  "multi_skiing.jpg",
+  "riding_elephant.jpg",
+  "skate_park_venice.jpg",
+  "skate_park.jpg",
+  "tennis_in_crowd.jpg",
+  "two_on_bench.jpg",
 ];
 
 /**
@@ -71,7 +71,7 @@ const images = [
  */
 function drawResults(canvas, poses, minPartConfidence, minPoseConfidence) {
   renderImageToCanvas(image, [513, 513], canvas);
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   poses.forEach((pose) => {
     if (pose.score >= minPoseConfidence) {
       if (guiState.showKeypoints) {
@@ -90,12 +90,12 @@ function drawResults(canvas, poses, minPartConfidence, minPoseConfidence) {
 }
 
 const imageBucket =
-  'https://storage.googleapis.com/tfjs-models/assets/posenet/';
+  "https://storage.googleapis.com/tfjs-models/assets/posenet/";
 
 async function loadImage(imagePath) {
   const image = new Image();
   const promise = new Promise((resolve, reject) => {
-    image.crossOrigin = '';
+    image.crossOrigin = "";
     image.onload = () => {
       resolve(image);
     };
@@ -106,7 +106,7 @@ async function loadImage(imagePath) {
 }
 
 function multiPersonCanvas() {
-  return document.querySelector('#multi canvas');
+  return document.querySelector("#multi canvas");
 }
 
 let image = null;
@@ -126,11 +126,11 @@ function drawMultiplePosesResults() {
 }
 
 function setStatusText(verificacion) {
-  const resultElement = document.getElementById('lds-ring');
+  const resultElement = document.getElementById("lds-ring");
   if (verificacion) {
-    resultElement.style.visibility = 'visible';
+    resultElement.style.visibility = "visible";
   } else {
-    resultElement.style.visibility = 'hidden';
+    resultElement.style.visibility = "hidden";
   }
 }
 
@@ -151,7 +151,7 @@ async function testImageAndEstimatePoses(net) {
   setStatusText(true);
   Nprogress.start();
 
-  document.getElementById('results').style.display = 'none';
+  document.getElementById("results").style.display = "none";
 
   // Purge prevoius variables and free up GPU memory
   disposePoses();
@@ -165,7 +165,7 @@ async function testImageAndEstimatePoses(net) {
   // Estimates poses
   const poses = await net.estimatePoses(input, {
     flipHorizontal: false,
-    decodingMethod: 'multi-person',
+    decodingMethod: "multi-person",
     maxDetections: guiState.multiPoseDetection.maxDetections,
     scoreThreshold: guiState.multiPoseDetection.minPartConfidence,
     nmsRadius: guiState.multiPoseDetection.nmsRadius,
@@ -177,7 +177,7 @@ async function testImageAndEstimatePoses(net) {
 
   setStatusText(false);
   Nprogress.done();
-  document.getElementById('results').style.display = 'block';
+  document.getElementById("results").style.display = "block";
   input.dispose();
 }
 
@@ -214,13 +214,13 @@ const defaultResNetInputResolution = 257;
 let guiState = {
   net: null,
   model: {
-    architecture: 'MobileNetV1',
+    architecture: "MobileNetV1",
     outputStride: defaultMobileNetStride,
     inputResolution: defaultMobileNetInputResolution,
     multiplier: defaultMobileNetMultiplier,
     quantBytes: defaultQuantBytes,
   },
-  image: 'tennis_in_crowd.jpg',
+  image: "tennis_in_crowd.jpg",
   multiPoseDetection: {
     minPartConfidence: 0.1,
     minPoseConfidence: 0.2,
@@ -234,20 +234,21 @@ let guiState = {
 
 function setupGui(net) {
   guiState.net = net;
-  const gui = new dat.GUI();
 
-  document.getElementById('gui').appendChild(gui.domElement);
+  const gui = new dat.GUI({ width: 200 });
+
+  document.getElementById("gui").appendChild(gui.domElement);
 
   let architectureController = null;
   guiState[tryResNetButtonName] = function () {
-    architectureController.setValue('ResNet50');
+    architectureController.setValue("ResNet50");
   };
   gui.add(guiState, tryResNetButtonName).name(tryResNetButtonText);
   updateTryResNetButtonDatGuiCss();
   // Input resolution:  Internally, this parameter affects the height and width
   // of the layers in the neural network. The higher the value of the input
   // resolution the better the accuracy but slower the speed.
-  const model = gui.addFolder('Model');
+  const model = gui.addFolder("Model");
   model.open();
   let inputResolutionController = null;
   function updateGuiInputResolution(inputResolutionArray) {
@@ -256,7 +257,7 @@ function setupGui(net) {
     }
     inputResolutionController = model.add(
       guiState.model,
-      'inputResolution',
+      "inputResolution",
       inputResolutionArray
     );
 
@@ -276,7 +277,7 @@ function setupGui(net) {
     }
     outputStrideController = model.add(
       guiState.model,
-      'outputStride',
+      "outputStride",
       outputStrideArray
     );
     outputStrideController.onChange((outputStride) => {
@@ -296,7 +297,7 @@ function setupGui(net) {
     }
     multiplierController = model.add(
       guiState.model,
-      'multiplier',
+      "multiplier",
       multiplierArray
     );
     multiplierController.onChange((multiplier) => {
@@ -316,7 +317,7 @@ function setupGui(net) {
     }
     quantBytesController = model.add(
       guiState.model,
-      'quantBytes',
+      "quantBytes",
       quantBytesArray
     );
     quantBytesController.onChange((quantBytes) => {
@@ -327,7 +328,7 @@ function setupGui(net) {
 
   function updateGui() {
     updateGuiInputResolution([257, 353, 449, 513, 801]);
-    if (guiState.model.architecture.includes('ResNet50')) {
+    if (guiState.model.architecture.includes("ResNet50")) {
       updateGuiOutputStride([32, 16]);
       updateGuiMultiplier([1.0]);
     } else {
@@ -340,12 +341,12 @@ function setupGui(net) {
   // Architecture: there are a few PoseNet models varying in size and
   // accuracy. 1.01 is the largest, but will be the slowest. 0.50 is the
   // fastest, but least accurate.
-  architectureController = model.add(guiState.model, 'architecture', [
-    'MobileNetV1',
-    'ResNet50',
+  architectureController = model.add(guiState.model, "architecture", [
+    "MobileNetV1",
+    "ResNet50",
   ]);
   architectureController.onChange(async function (architecture) {
-    if (architecture.includes('ResNet50')) {
+    if (architecture.includes("ResNet50")) {
       guiState.model.inputResolution = defaultResNetInputResolution;
       guiState.model.outputStride = defaultResNetStride;
       guiState.model.multiplier = defaultResNetMultiplier;
@@ -363,36 +364,36 @@ function setupGui(net) {
   updateGui();
 
   gui
-    .add(guiState, 'image', images)
+    .add(guiState, "image", images)
     .onChange(() => testImageAndEstimatePoses(guiState.net));
 
   // Pose confidence: the overall confidence in the estimation of a person's
   // pose (i.e. a person detected in a frame)
   // Min part confidence: the confidence that a particular estimated keypoint
   // position is accurate (i.e. the elbow's position)
-  const multiPoseDetection = gui.addFolder('Multi Pose Estimation');
+  const multiPoseDetection = gui.addFolder("Multi Pose Estimation");
   multiPoseDetection.open();
   multiPoseDetection
-    .add(guiState.multiPoseDetection, 'minPartConfidence', 0.0, 1.0)
+    .add(guiState.multiPoseDetection, "minPartConfidence", 0.0, 1.0)
     .onChange(drawMultiplePosesResults);
   multiPoseDetection
-    .add(guiState.multiPoseDetection, 'minPoseConfidence', 0.0, 1.0)
+    .add(guiState.multiPoseDetection, "minPoseConfidence", 0.0, 1.0)
     .onChange(drawMultiplePosesResults);
 
   // nms Radius: controls the minimum distance between poses that are returned
   // defaults to 20, which is probably fine for most use cases
   multiPoseDetection
-    .add(guiState.multiPoseDetection, 'nmsRadius', 0.0, 40.0)
+    .add(guiState.multiPoseDetection, "nmsRadius", 0.0, 40.0)
     .onChange(() => testImageAndEstimatePoses(guiState.net));
   multiPoseDetection
-    .add(guiState.multiPoseDetection, 'maxDetections')
+    .add(guiState.multiPoseDetection, "maxDetections")
     .min(1)
     .max(20)
     .step(1)
     .onChange(() => testImageAndEstimatePoses(guiState.net));
-  gui.add(guiState, 'showKeypoints').onChange(drawMultiplePosesResults);
-  gui.add(guiState, 'showSkeleton').onChange(drawMultiplePosesResults);
-  gui.add(guiState, 'showBoundingBox').onChange(drawMultiplePosesResults);
+  gui.add(guiState, "showKeypoints").onChange(drawMultiplePosesResults);
+  gui.add(guiState, "showSkeleton").onChange(drawMultiplePosesResults);
+  gui.add(guiState, "showBoundingBox").onChange(drawMultiplePosesResults);
 }
 
 /**

@@ -32,4 +32,61 @@
 }
 #gui {
   margin-top: -3.5em;
+  width: 95%;
+}
+@media only screen and (max-width: 1200px) {
+  #main {
+    display: block;
+    position: relative;
+    margin: 35px 0;
+    height: 30em;
+  }
+  #multi canvas {
+    top: 45%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    box-sizing: content-box;
+    width: 50%;
+    height: 80%;
+  }
+}
+@media only screen and (max-width: 850px) {
+  #main {
+    display: block;
+    position: relative;
+    margin: 35px 0;
+    height: 30em;
+  }
+  #multi canvas {
+    top: 40%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border: solid green;
+    box-sizing: content-box;
+    width: 50%;
+    height: 70%;
+  }
+}
+@media only screen and (max-width: 576px) {
+  #main {
+    display: block;
+    position: relative;
+    margin: 35px 0;
+    height: 30em;
+  }
+  #multi canvas {
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    box-sizing: content-box;
+    width: 75%;
+    height: 60%;
+  }
+  #gui {
+    margin-top: 20em;
+    margin-left: -12%;
+  }
 }
