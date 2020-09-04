@@ -15,16 +15,16 @@
  * =============================================================================
  */
 
-import * as facemesh from '@tensorflow-models/facemesh';
-import * as tf from '@tensorflow/tfjs-core';
-import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
+import * as facemesh from "@tensorflow-models/facemesh";
+import * as tf from "@tensorflow/tfjs-core";
+import * as tfjsWasm from "@tensorflow/tfjs-backend-wasm";
 
-import Stats from 'stats.js';
-import { TRIANGULATION } from './triangulation';
-import { toggleLoadingUI } from './demo_util';
+import Stats from "stats.js";
+import { TRIANGULATION } from "./triangulation";
+import { toggleLoadingUI } from "./demo_util";
 // TODO(annxingyuan): read version from tfjsWasm directly once
 // https://github.com/tensorflow/tfjs/pull/2819 is merged.
-import { version } from '@tensorflow/tfjs-backend-wasm/dist/version';
+import { version } from "@tensorflow/tfjs-backend-wasm/dist/version";
 
 tfjsWasm.setWasmPath(
   `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${version}/dist/tfjs-backend-wasm.wasm`
@@ -32,8 +32,12 @@ tfjsWasm.setWasmPath(
 
 function isMobile() {
   const isAndroid = /Android/i.test(navigator.userAgent);
-  const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isiOS = /iPhone|iPod/i.test(navigator.userAgent);
   return isAndroid || isiOS;
+}
+function isTablet() {
+  const isiOS = /iPad/i.test(navigator.userAgent);
+  return isiOS;
 }
 
 function drawPath(ctx, points, closePath) {
@@ -61,12 +65,14 @@ let model,
 
 let VIDEO_SIZE = 415;
 const mobile = isMobile();
+const tablet = isTablet();
 // Don't render the point cloud on mobile in order to maximize performance and
 // to avoid crowding limited screen space.
 const renderPointcloud = mobile === false;
+const renderPointcloudTablet = tablet === false;
 const stats = new Stats();
 const state = {
-  backend: 'wasm',
+  backend: "wasm",
   maxFaces: 1,
   triangulateMesh: true,
 };
@@ -74,42 +80,52 @@ const state = {
 if (renderPointcloud) {
   state.renderPointcloud = true;
 }
-
+if (renderPointcloudTablet) {
+  state.renderPointcloudTablet = true;
+}
 function setupDatGui() {
   const gui = new dat.GUI();
   gui
-    .add(state, 'backend', ['wasm', 'webgl', 'cpu'])
+    .add(state, "backend", ["wasm", "webgl", "cpu"])
     .onChange(async (backend) => {
       await tf.setBackend(backend);
     });
 
-  gui.add(state, 'maxFaces', 1, 20, 1).onChange(async (val) => {
+  gui.add(state, "maxFaces", 1, 20, 1).onChange(async (val) => {
     model = await facemesh.load({ maxFaces: val });
   });
 
-  gui.add(state, 'triangulateMesh');
+  gui.add(state, "triangulateMesh");
 
   if (renderPointcloud) {
-    gui.add(state, 'renderPointcloud').onChange((render) => {
-      document.querySelector('#scatter-gl-container').style.display = render
-        ? 'inline-block'
-        : 'none';
+    gui.add(state, "renderPointcloud").onChange((render) => {
+      document.querySelector("#scatter-gl-container").style.display = render
+        ? "inline-block"
+        : "none";
     });
   }
-  document.getElementById('gui').appendChild(gui.domElement);
+  if (renderPointcloudTablet) {
+    gui.add(state, "renderPointcloudTablet").onChange((render) => {
+      document.querySelector("#scatter-gl-container").style.display = render
+        ? "inline-block"
+        : "none";
+    });
+  }
+  document.getElementById("gui").appendChild(gui.domElement);
 }
 
 async function setupCamera() {
-  video = document.getElementById('video');
+  video = document.getElementById("video");
 
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: false,
     video: {
-      facingMode: 'user',
+      facingMode: "user",
       // Only setting the video to a specified size in order to accommodate a
       // point cloud, so on mobile devices accept the default size.
-      width: mobile ? undefined : VIDEO_SIZE,
-      height: mobile ? undefined : VIDEO_SIZE,
+
+      width: mobile ? 275 : tablet ? 390 : VIDEO_SIZE,
+      height: mobile ? 275 : tablet ? 400 : VIDEO_SIZE,
     },
   });
   video.srcObject = stream;
@@ -182,6 +198,29 @@ async function renderPrediction() {
       }
       scatterGLHasInitialized = true;
     }
+    if (
+      renderPointcloudTablet &&
+      state.renderPointcloudTablet &&
+      scatterGL != null
+    ) {
+      const pointsData = predictions.map((prediction) => {
+        let scaledMesh = prediction.scaledMesh;
+        return scaledMesh.map((point) => [-point[0], -point[1], -point[2]]);
+      });
+
+      let flattenedPointsData = [];
+      for (let i = 0; i < pointsData.length; i++) {
+        flattenedPointsData = flattenedPointsData.concat(pointsData[i]);
+      }
+      const dataset = new ScatterGL.Dataset(flattenedPointsData);
+
+      if (!scatterGLHasInitialized) {
+        scatterGL.render(dataset);
+      } else {
+        scatterGL.updateDataset(dataset);
+      }
+      scatterGLHasInitialized = true;
+    }
   }
 
   stats.end();
@@ -195,9 +234,11 @@ async function main() {
 
   stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
   document.body.prepend(stats.domElement);
-  stats.domElement.style.position = 'absolute';
-  stats.domElement.style.marginLeft = '2%';
-  stats.domElement.style.marginTop = '17.8em';
+  document.getElementById("stats").appendChild(stats.domElement);
+
+  stats.domElement.style.position = "absolute";
+  stats.domElement.style.marginLeft = "2%";
+  stats.domElement.style.marginTop = "19em";
 
   await setupCamera();
   video.play();
@@ -206,17 +247,17 @@ async function main() {
   video.width = videoWidth;
   video.height = videoHeight;
 
-  canvas = document.getElementById('output');
+  canvas = document.getElementById("output");
   canvas.width = videoWidth;
   canvas.height = videoHeight;
-  const canvasContainer = document.querySelector('.canvas-wrapper');
+  const canvasContainer = document.querySelector(".canvas-wrapper");
   canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px;`;
 
-  ctx = canvas.getContext('2d');
+  ctx = canvas.getContext("2d");
   ctx.translate(canvas.width, 0);
   ctx.scale(-1, 1);
-  ctx.fillStyle = '#32EEDB';
-  ctx.strokeStyle = '#32EEDB';
+  ctx.fillStyle = "#32EEDB";
+  ctx.strokeStyle = "#32EEDB";
   ctx.lineWidth = 0.5;
 
   model = await facemesh.load({ maxFaces: state.maxFaces });
@@ -224,14 +265,15 @@ async function main() {
 
   if (renderPointcloud) {
     document.querySelector(
-      '#scatter-gl-container'
+      "#scatter-gl-container"
     ).style = `width: ${VIDEO_SIZE}px; height: ${VIDEO_SIZE}px;`;
 
-    scatterGL = new ScatterGL(document.querySelector('#scatter-gl-container'), {
+    scatterGL = new ScatterGL(document.querySelector("#scatter-gl-container"), {
       rotateOnStart: false,
       selectEnabled: false,
     });
   }
+
   toggleLoadingUI(false);
 }
 
